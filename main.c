@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 			free_stack(&stack);
 			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, tokens[0]);
 			free_tokens();
-			code = EXIT_FAILURE;
+			return(EXIT_FAILURE);
 		}
         func(&stack, line_number);
         free_tokens();
