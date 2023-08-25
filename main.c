@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     {
         line_number++;
         parse(&tokens, lineptr, size, DELIMITERS);
-		if (tokens == NULL)
+		if (*tokens == NULL)
 		{
 			if (is_empty_line(lineptr, DELIMITERS))
 				continue;
