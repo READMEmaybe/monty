@@ -41,6 +41,7 @@ int main(int argc, char **argv)
 			free_tokens();
 			continue;
 		}
+		free(lineptr);
         func = get_func(tokens[0]);
         if (!func)
         {
