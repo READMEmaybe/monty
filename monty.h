@@ -61,7 +61,8 @@ size_t parse(char ***args, char *line, size_t size, const char *delims);
 stack_t *add_dnodeint(stack_t **head, const int n);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
 
-
+void free_monty(void);
+void free_vec(char **vec);
 
 
 void push(stack_t **stack, unsigned int line_number);

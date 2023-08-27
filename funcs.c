@@ -14,9 +14,7 @@ void push(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		free_stack(stack);
-		free_tokens();
-		free(monty.line);
-		fclose(monty.file);
+		free_monty();
 		exit(EXIT_FAILURE);
 	}
 
@@ -28,9 +26,7 @@ void push(stack_t **stack, unsigned int line_number)
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
 			free_stack(stack);
-			free_tokens();
-			free(monty.line);
-			fclose(monty.file);
+			free_monty();
 			exit(EXIT_FAILURE);
 		}
 	}

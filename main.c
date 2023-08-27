@@ -52,9 +52,7 @@ int main(int argc, char **argv)
         {
 			free_stack(&stack);
 			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, monty.tokens[0]);
-			free_tokens();
-			free(monty.line);
-			fclose(monty.file);
+			free_monty();
 			exit(EXIT_FAILURE);
 		}
         func(&stack, line_number);

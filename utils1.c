@@ -1,5 +1,12 @@
 #include "monty.h"
 
+void free_monty(void)
+{
+	free(monty.line);
+	free_vec(monty.tokens);
+	fclose(monty.file);
+}
+
 int check_mode(stack_t *stack)
 {
 	if (stack->n == STACK)
@@ -8,7 +15,18 @@ int check_mode(stack_t *stack)
 		return (QUEUE);
 	return (2);
 }
+void free_vec(char **vec)
+{
+	int i;
 
+	if (vec)
+	{
+		for (i = 0; vec[i]; i++)
+			free(vec[i]);
+		free(vec);
+		vec = NULL;
+	}
+}
 void free_tokens(void)
 {
 	size_t i = 0;
