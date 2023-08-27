@@ -30,23 +30,19 @@ int main(int argc, char **argv)
 	}
     while (getline(&lineptr, &size, bytecode_file) != -1)
     {
+		if (monty.tokens)
+			free_vec(monty.tokens);
         line_number++;
 		monty.line = lineptr;
         parse(&monty.tokens, lineptr, size, DELIMITERS);
 		if (*monty.tokens == NULL)
 		{
 			if (is_empty_line(lineptr, DELIMITERS))
-			{
-				free_vec(monty.tokens);
 				continue;
-			}
 		}
 		
 		if (monty.tokens[0][0] == '#')
-		{
-			free_vec(monty.tokens);
 			continue;
-		}
         func = get_func(monty.tokens[0]);
         if (!func)
         {
@@ -56,10 +52,8 @@ int main(int argc, char **argv)
 			exit(EXIT_FAILURE);
 		}
         func(&stack, line_number);
-        free_vec(monty.tokens);
     }
 	free_stack(&stack);
-	free(monty.line);
-	fclose(bytecode_file);
+	free_monty();
 	return(code);
 }
