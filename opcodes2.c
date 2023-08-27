@@ -46,34 +46,32 @@ void pchar(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pstr - Prints the string contained in a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * pstr - Prints a string of characters from the stack.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script (unused).
  */
 void pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = (*stack)->next;
+	(void)line_number;
 
 	while (tmp && tmp->n != 0 && (tmp->n > 0 && tmp->n <= 127))
 	{
 		printf("%c", tmp->n);
 		tmp = tmp->next;
 	}
-
 	printf("\n");
-
-	(void)line_number;
 }
 
-
 /**
- * rotl - Rotates the top value of a stack_t linked list to the bottom.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * rotl - Rotates the top element of the stack to the bottom.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script (unused).
  */
 void rotl(stack_t **stack, unsigned int line_number)
 {
 	stack_t *top, *bottom;
+	(void)line_number;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 		return;
@@ -88,18 +86,17 @@ void rotl(stack_t **stack, unsigned int line_number)
 	bottom->next = top;
 	top->next = NULL;
 	top->prev = bottom;
-
-	(void)line_number;
 }
 
 /**
- * rotr - Rotates the bottom value of a stack_t linked list to the top.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * rotr - Rotates the bottom element of the stack to the top.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script (unused).
  */
 void rotr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *top, *bottom;
+	(void)line_number;
 
 	if ((*stack)->next == NULL || (*stack)->next->next == NULL)
 		return;
@@ -114,6 +111,4 @@ void rotr(stack_t **stack, unsigned int line_number)
 	bottom->prev = *stack;
 	bottom->next = top;
 	top->prev = bottom;
-
-	(void)line_number;
 }

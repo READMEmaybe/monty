@@ -1,4 +1,5 @@
 #include "monty.h"
+
 /**
  * _strlen - Returns the length of a string.
  * @str: The string to be checked.
@@ -13,6 +14,7 @@ size_t _strlen(const char *str)
 
 	return (i);
 }
+
 /**
  * *_strcpy - Copies string.
  * @dest: Destination string.
@@ -31,6 +33,7 @@ char *_strcpy(char *dest, const char *src)
 
 	return (dest);
 }
+
 /**
  * _strchr - Locates the first occurrence of a character in a string.
  * @str: The string to search in.
@@ -39,7 +42,6 @@ char *_strcpy(char *dest, const char *src)
  * Return: Returns a pointer to the first occurrence of the character c
  *			in the string str, or NULL if the character is not found.
  */
-
 char *_strchr(const char *str, int c)
 {
 	while (*str != '\0')
@@ -51,6 +53,7 @@ char *_strchr(const char *str, int c)
 
 	return (NULL);
 }
+
 /**
  * _strtok - Breaks a string into a sequence of
  * zero or more nonempty tokens
@@ -88,6 +91,7 @@ char *_strtok(char *str, const char *delim)
 
 	return (token);
 }
+
 /**
  * parse - Tokenizes a line and stores the tokens in a 2D array.
  * @args: Pointer to the pointer that will hold the array of tokens.
@@ -111,12 +115,11 @@ size_t parse(char ***args, char *line, size_t size, const char *delims)
 	for (i = 0; token; i++)
 	{
 		(*args)[i] = malloc((_strlen(token) + 1) * sizeof(char));
-		/* if (!(*args)[i])
+		if (!(*args)[i])
 		{
 			free_vec(*args);
 			return (0);
-		} */
-
+		}
 		_strcpy((*args)[i], token);
 		token = _strtok(NULL, delims);
 	}

@@ -1,12 +1,9 @@
 #include "monty.h"
 
-
-
-
 /**
- * stack - Converts a queue to a stack.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * stack - Sets the mode of the data structure to stack (LIFO).
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script (unused).
  */
 void stack(stack_t **stack, unsigned int line_number)
 {
@@ -15,9 +12,9 @@ void stack(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * queue - Converts a stack to a queue.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * queue - Sets the mode of the data structure to queue (FIFO).
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script (unused).
  */
 void queue(stack_t **stack, unsigned int line_number)
 {

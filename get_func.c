@@ -1,5 +1,12 @@
 #include "monty.h"
 
+/**
+ * get_func - Retrieves the function associated with a Monty opcode.
+ * @opcode: The Monty opcode to be looked up.
+ *
+ * Return: A pointer to the function associated with the opcode,
+ *	or NULL if not found.
+ */
 void (*get_func(char *opcode))(stack_t**, unsigned int)
 {
 	instruction_t funcs[] = {
