@@ -61,6 +61,7 @@ size_t parse(char ***args, char *line, size_t size, const char *delims);
 stack_t *add_dnodeint(stack_t **head, const int n);
 stack_t *add_dnodeint_end(stack_t **head, const int n);
 
+int start_monty(int argc, const char *filename, stack_t **stack);
 void free_monty(void);
 void free_vec(char **vec);
 

@@ -1,5 +1,28 @@
 #include "monty.h"
 
+int start_monty(int argc, const char *filename, stack_t **stack)
+{
+	if (argc != 2)
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		return (EXIT_FAILURE);
+	}
+
+	monty.file = fopen(filename, "r");
+	if (!monty.file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", filename);
+		return (EXIT_FAILURE);
+	}
+
+	if (create_stack(stack) == EXIT_FAILURE)
+	{
+		fclose(monty.file);
+		return (EXIT_FAILURE);
+	}
+
+	return (EXIT_SUCCESS);
+}
 void free_monty(void)
 {
 	free(monty.line);
@@ -27,18 +50,7 @@ void free_vec(char **vec)
 		vec = NULL;
 	}
 }
-void free_tokens(void)
-{
-	size_t i = 0;
 
-	if (monty.tokens == NULL)
-		return;
-
-	for (i = 0; monty.tokens[i]; i++)
-		free(monty.tokens[i]);
-
-	free(monty.tokens);
-}
 int is_empty_line(char *line, char *delims)
 {
 	int i, j;
