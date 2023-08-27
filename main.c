@@ -2,6 +2,13 @@
 
 monty_t monty;
 
+/**
+ * main - main entry to the program
+ * @argc: arg count
+ * @argv: arg vector
+ *
+ * Return: 0 on success, 1 on failure
+*/
 int main(int argc, char **argv)
 {
 	unsigned int line_number = 0;

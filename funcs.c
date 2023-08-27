@@ -9,7 +9,6 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	int i, n;
 
-
 	if (monty.tokens[1] == NULL)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
@@ -17,7 +16,6 @@ void push(stack_t **stack, unsigned int line_number)
 		free_monty();
 		exit(EXIT_FAILURE);
 	}
-
 	for (i = 0; monty.tokens[1][i]; i++)
 	{
 		if (monty.tokens[1][i] == '-' && i == 0)
@@ -46,13 +44,13 @@ void push(stack_t **stack, unsigned int line_number)
 void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = (*stack)->next;
+	(void)line_number;
 
 	while (tmp)
 	{
 		printf("%d\n", tmp->n);
 		tmp = tmp->next;
 	}
-	(void)line_number;
 }
 
 /**
@@ -62,7 +60,13 @@ void pall(stack_t **stack, unsigned int line_number)
  */
 void pint(stack_t **stack, unsigned int line_number)
 {
-	(void) line_number;
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
+		free_stack(stack);
+		free_monty();
+		exit(EXIT_FAILURE);
+	}
 	printf("%d\n", (*stack)->next->n);
 }
 
