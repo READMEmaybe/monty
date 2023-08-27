@@ -95,15 +95,25 @@ void pop(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * swap - Swaps the top two value elements of a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * swap - Swaps the top two elements of the stack.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script.
  */
 void swap(stack_t **stack, unsigned int line_number)
 {
+	int len = 0;
 	stack_t *tmp;
-	(void) line_number;
 
+	tmp = (*stack)->next;
+	for (; tmp != NULL; tmp = tmp->next, len++)
+		;
+	if (len < 2)
+	{
+		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
+		free_stack(stack);
+		free_monty();
+		exit(EXIT_FAILURE);
+	}
 	tmp = (*stack)->next->next;
 	(*stack)->next->next = tmp->next;
 	(*stack)->next->prev = tmp;
