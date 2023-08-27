@@ -7,7 +7,7 @@ int main(int argc, char **argv)
     FILE *bytecode_file = NULL;
     char *lineptr = NULL;
     unsigned int line_number = 0;
-    size_t size = 0, code = EXIT_SUCCESS;
+    size_t size = 0;
     stack_t *stack = NULL;
     void (*func)(stack_t**, unsigned int);
 
@@ -36,11 +36,8 @@ int main(int argc, char **argv)
 		monty.line = lineptr;
         parse(&monty.tokens, lineptr, size, DELIMITERS);
 		if (*monty.tokens == NULL)
-		{
 			if (is_empty_line(lineptr, DELIMITERS))
 				continue;
-		}
-		
 		if (monty.tokens[0][0] == '#')
 			continue;
         func = get_func(monty.tokens[0]);
@@ -55,5 +52,5 @@ int main(int argc, char **argv)
     }
 	free_stack(&stack);
 	free_monty();
-	return(code);
+	return(EXIT_SUCCESS);
 }
