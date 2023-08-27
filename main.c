@@ -4,8 +4,6 @@ monty_t monty;
 
 int main(int argc, char **argv)
 {
-    FILE *bytecode_file = NULL;
-    char *lineptr = NULL;
     unsigned int line_number = 0;
     size_t size = 0;
     stack_t *stack = NULL;
@@ -16,27 +14,25 @@ int main(int argc, char **argv)
         fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
     }
-    bytecode_file = fopen(argv[1], "r");
-	monty.file = bytecode_file;
-    if (!bytecode_file)
+    monty.file = fopen(argv[1], "r");
+    if (!monty.file)
     {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
     }    
 	if (create_stack(&stack) == EXIT_FAILURE)
 	{
-		fclose(bytecode_file);
+		fclose(monty.file);
 		exit(EXIT_FAILURE);
 	}
-    while (getline(&lineptr, &size, bytecode_file) != -1)
+    while (getline(&monty.line, &size, monty.file) != -1)
     {
 		if (monty.tokens)
 			free_vec(monty.tokens);
         line_number++;
-		monty.line = lineptr;
-        parse(&monty.tokens, lineptr, size, DELIMITERS);
+        parse(&monty.tokens, monty.line, size, DELIMITERS);
 		if (*monty.tokens == NULL)
-			if (is_empty_line(lineptr, DELIMITERS))
+			if (is_empty_line(monty.line, DELIMITERS))
 				continue;
 		if (monty.tokens[0][0] == '#')
 			continue;
