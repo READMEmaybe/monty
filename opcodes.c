@@ -70,7 +70,6 @@ void pint(stack_t **stack, unsigned int line_number)
 	printf("%d\n", (*stack)->next->n);
 }
 
-
 /**
  * pop - Removes the top element of the stack.
  * @stack: A pointer to the pointer to the stack.
