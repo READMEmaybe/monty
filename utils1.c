@@ -13,13 +13,13 @@ void free_tokens(void)
 {
 	size_t i = 0;
 
-	if (tokens == NULL)
+	if (monty.tokens == NULL)
 		return;
 
-	for (i = 0; tokens[i]; i++)
-		free(tokens[i]);
+	for (i = 0; monty.tokens[i]; i++)
+		free(monty.tokens[i]);
 
-	free(tokens);
+	free(monty.tokens);
 }
 int is_empty_line(char *line, char *delims)
 {

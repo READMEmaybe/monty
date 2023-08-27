@@ -41,6 +41,15 @@ typedef struct instruction_s
     void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+typedef struct monty_s
+{
+    char *line;
+    char **tokens;
+    FILE *file;
+} monty_t;
+extern monty_t monty;
+
+
 void (*get_func(char *opcode))(stack_t**, unsigned int);
 int check_mode(stack_t *stack);
 void free_stack(stack_t **stack);
@@ -48,6 +57,13 @@ int create_stack(stack_t **stack);
 int is_empty_line(char *line, char *delims);
 void free_tokens(void);
 size_t parse(char ***args, char *line, size_t size, const char *delims);
+
+stack_t *add_dnodeint(stack_t **head, const int n);
+stack_t *add_dnodeint_end(stack_t **head, const int n);
+
+
+
+
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);

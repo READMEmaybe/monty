@@ -1,6 +1,6 @@
 #include "monty.h"
 
-char **tokens = NULL;
+monty_t monty;
 
 int main(int argc, char **argv)
 {
@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
     }
     bytecode_file = fopen(argv[1], "r");
+	monty.file = bytecode_file;
     if (!bytecode_file)
     {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
@@ -25,34 +26,42 @@ int main(int argc, char **argv)
 	if (create_stack(&stack) == EXIT_FAILURE)
 	{
 		fclose(bytecode_file);
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
     while (getline(&lineptr, &size, bytecode_file) != -1)
     {
         line_number++;
-        parse(&tokens, lineptr, size, DELIMITERS);
-		if (*tokens == NULL)
+		monty.line = lineptr;
+        parse(&monty.tokens, lineptr, size, DELIMITERS);
+		if (*monty.tokens == NULL)
 		{
 			if (is_empty_line(lineptr, DELIMITERS))
+			{
+				free_tokens();
 				continue;
+			}
 		}
-		if (tokens[0][0] == '#')
+		
+		if (monty.tokens[0][0] == '#')
 		{
 			free_tokens();
 			continue;
 		}
-        func = get_func(tokens[0]);
+        func = get_func(monty.tokens[0]);
         if (!func)
         {
 			free_stack(&stack);
-			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, tokens[0]);
+			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, monty.tokens[0]);
 			free_tokens();
-			return(EXIT_FAILURE);
+			free(monty.line);
+			fclose(monty.file);
+			exit(EXIT_FAILURE);
 		}
         func(&stack, line_number);
         free_tokens();
     }
 	free_stack(&stack);
+	free(monty.line);
 	fclose(bytecode_file);
 	return(code);
 }

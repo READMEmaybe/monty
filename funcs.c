@@ -7,52 +7,39 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp, *new;
-	int i;
+	int i, n;
 
-	new = malloc(sizeof(stack_t));
-	/* --------------- ---------------- ------------- */
-	if (new == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	if (tokens[1] == NULL)
+
+	if (monty.tokens[1] == NULL)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		free_stack(stack);
+		free_tokens();
+		free(monty.line);
+		fclose(monty.file);
 		exit(EXIT_FAILURE);
 	}
 
-	for (i = 0; tokens[1][i]; i++)
+	for (i = 0; monty.tokens[1][i]; i++)
 	{
-		if (tokens[1][i] == '-' && i == 0)
+		if (monty.tokens[1][i] == '-' && i == 0)
 			continue;
-		if (tokens[1][i] < '0' || tokens[1][i] > '9')
+		if (monty.tokens[1][i] < '0' || monty.tokens[1][i] > '9')
 		{
 			fprintf(stderr, "L%u: usage: push integer\n", line_number);
+			free_stack(stack);
+			free_tokens();
+			free(monty.line);
+			fclose(monty.file);
 			exit(EXIT_FAILURE);
 		}
 	}
-	new->n = atoi(tokens[1]);
+	n = atoi(monty.tokens[1]);
 
 	if (check_mode(*stack) == STACK)
-	{
-		tmp = (*stack)->next;
-		new->prev = *stack;
-		new->next = tmp;
-		if (tmp)
-			tmp->prev = new;
-		(*stack)->next = new;
-	}
+		add_dnodeint(stack, n);
 	else
-	{
-		tmp = *stack;
-		while (tmp->next)
-			tmp = tmp->next;
-		new->prev = tmp;
-		new->next = NULL;
-		tmp->next = new;
-	}
+		add_dnodeint_end(stack, n);
 }
 
 /**
