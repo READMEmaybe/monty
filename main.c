@@ -37,26 +37,26 @@ int main(int argc, char **argv)
 		{
 			if (is_empty_line(lineptr, DELIMITERS))
 			{
-				free_tokens();
+				free_vec(monty.tokens);
 				continue;
 			}
 		}
 		
 		if (monty.tokens[0][0] == '#')
 		{
-			free_tokens();
+			free_vec(monty.tokens);
 			continue;
 		}
         func = get_func(monty.tokens[0]);
         if (!func)
         {
-			free_stack(&stack);
 			fprintf(stderr, "L%u: unknown instruction %s\n", line_number, monty.tokens[0]);
+			free_stack(&stack);
 			free_monty();
 			exit(EXIT_FAILURE);
 		}
         func(&stack, line_number);
-        free_tokens();
+        free_vec(monty.tokens);
     }
 	free_stack(&stack);
 	free(monty.line);
