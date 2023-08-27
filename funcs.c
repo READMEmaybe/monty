@@ -1,9 +1,9 @@
 #include "monty.h"
 
 /**
- * push - Pushes a value to a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * push - Pushes an integer onto the top of a stack.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script.
  */
 void push(stack_t **stack, unsigned int line_number)
 {
@@ -37,9 +37,9 @@ void push(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pall - Prints the values of a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * pall - Prints all the integers in the stack, starting from the top.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script (unused).
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
@@ -54,9 +54,9 @@ void pall(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * pint - Prints the top value of a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * pint - Prints the value at the top of the stack.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script.
  */
 void pint(stack_t **stack, unsigned int line_number)
 {
@@ -72,15 +72,21 @@ void pint(stack_t **stack, unsigned int line_number)
 
 
 /**
- * pop - Removes the top value element of a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * pop - Removes the top element of the stack.
+ * @stack: A pointer to the pointer to the stack.
+ * @line_number: The current line number in the Monty script.
  */
 void pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *next = NULL;
-	(void) line_number;
 
+	if ((*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't pop an empty stack\n", line_number);
+		free_stack(stack);
+		free_monty();
+		exit(EXIT_FAILURE);
+	}
 	next = (*stack)->next->next;
 	free((*stack)->next);
 	if (next)
